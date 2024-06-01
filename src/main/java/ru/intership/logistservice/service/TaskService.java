@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.intership.logistservice.client.PortalServiceClient;
 import ru.intership.logistservice.dto.TaskDto;
 import ru.intership.logistservice.dto.TaskLongDto;
 import ru.intership.logistservice.dto.UserDto;
@@ -26,12 +25,12 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final UserValidator userValidator;
-    private final PortalServiceClient portalServiceClient;
+    private final PortalService portalService;
 
     @Transactional
     public TaskDto create(TaskDto taskDto, String companyId, Set<String> roles) {
         userValidator.validateUserIsCompanyLogist(companyId, roles);
-        portalServiceClient.getUserByUsername(taskDto.getDriverUsername());
+        portalService.getUserByUsername(taskDto.getDriverUsername());
         Task task = taskMapper.toEntity(taskDto);
         task.setCompanyId(companyId);
         Task savedTask = taskRepository.save(task);
@@ -43,7 +42,7 @@ public class TaskService {
     public TaskLongDto getById(long id, Set<String> roles) {
         Task task = this.findById(id);
         userValidator.validateUserIsCompanyLogist(task.getCompanyId(), roles);
-        UserDto userDto = portalServiceClient.getUserByUsername(task.getDriverUsername());
+        UserDto userDto = portalService.getUserByUsername(task.getDriverUsername());
         TaskLongDto taskLongDto = taskMapper.toLongDto(task);
         taskLongDto.setDriver(userDto);
         return taskLongDto;

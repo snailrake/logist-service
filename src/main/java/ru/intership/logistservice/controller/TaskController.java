@@ -1,5 +1,6 @@
 package ru.intership.logistservice.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
@@ -23,7 +24,7 @@ public class TaskController {
     private final UserContext userContext;
 
     @PostMapping
-    public TaskDto create(@RequestBody TaskDto taskDto,
+    public TaskDto create(@RequestBody @Valid TaskDto taskDto,
                           @RequestParam String companyId) {
         return taskService.create(taskDto, companyId, userContext.getUserRoles());
     }

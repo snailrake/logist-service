@@ -27,7 +27,7 @@ public class RouteEventService {
         Route route = this.findRouteById(routeEventDto.getRouteId());
         routeEvent.setRoute(route);
         RouteEvent savedRouteEvent = routeEventRepository.save(routeEvent);
-        log.info("Route event saved: {}", savedRouteEvent);
+        log.info("Route event saved: {}", savedRouteEvent.getId());
         return routeEventMapper.toDto(savedRouteEvent);
     }
 

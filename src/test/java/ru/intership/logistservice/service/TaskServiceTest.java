@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
-import ru.intership.logistservice.client.PortalServiceClient;
 import ru.intership.logistservice.dto.TaskDto;
 import ru.intership.logistservice.dto.TaskLongDto;
 import ru.intership.logistservice.dto.UserDto;
@@ -38,7 +37,7 @@ public class TaskServiceTest {
     private UserValidator userValidator;
 
     @Mock
-    private PortalServiceClient portalServiceClient;
+    private PortalService portalService;
 
     @InjectMocks
     private TaskService taskService;
@@ -61,14 +60,14 @@ public class TaskServiceTest {
     public void getById_ValidArgs() {
         TaskLongDto expectedTaskLongDto = getTaskLongDto();
         when(taskRepository.findById(anyLong())).thenReturn(Optional.of(getTask()));
-        when(portalServiceClient.getUserByUsername(anyString())).thenReturn(getUserDto());
+        when(portalService.getUserByUsername(anyString())).thenReturn(getUserDto());
 
         TaskLongDto actualTaskLongDto = taskService.getById(1, Set.of());
 
         assertEquals(expectedTaskLongDto, actualTaskLongDto);
         verify(taskRepository, times(1)).findById(anyLong());
         verify(userValidator, times(1)).validateUserIsCompanyLogist(anyString(), anySet());
-        verify(portalServiceClient, times(1)).getUserByUsername(anyString());
+        verify(portalService, times(1)).getUserByUsername(anyString());
         verify(taskMapper, times(1)).toLongDto(any(Task.class));
     }
 
