@@ -6,9 +6,10 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.intership.common.UserContext;
 import ru.intership.logistservice.dto.TaskDto;
+import ru.intership.logistservice.dto.TaskLongDto;
 import ru.intership.logistservice.service.TaskService;
+import ru.intership.webcommonspringbootstarter.UserContext;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class TaskController {
     }
 
     @GetMapping("/{taskId}")
-    public TaskDto getById(@PathVariable @Positive long taskId) {
+    public TaskLongDto getById(@PathVariable @Positive long taskId) {
         return taskService.getById(taskId, userContext.getUserRoles());
     }
 

@@ -1,4 +1,4 @@
-package ru.intership.logistservice.dto;
+package ru.intership.logistservice.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class ErrorResponse {
 
-    private String firstName;
-    private String lastName;
-    private String email;
+    private String message;
+    private int status;
 }

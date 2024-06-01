@@ -6,10 +6,10 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.intership.common.UserContext;
 import ru.intership.logistservice.dto.RouteConditionDto;
 import ru.intership.logistservice.dto.RouteDto;
 import ru.intership.logistservice.service.RouteService;
+import ru.intership.webcommonspringbootstarter.UserContext;
 
 import java.util.List;
 

@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.intership.logistservice.client.PortalServiceClient;
 import ru.intership.logistservice.dto.TaskDto;
+import ru.intership.logistservice.dto.TaskLongDto;
+import ru.intership.logistservice.dto.UserDto;
 import ru.intership.logistservice.mapper.TaskMapper;
 import ru.intership.logistservice.model.Task;
-import ru.intership.logistservice.model.User;
 import ru.intership.logistservice.repository.TaskRepository;
 import ru.intership.logistservice.validator.UserValidator;
 
@@ -23,25 +25,28 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-    private final UserService userService;
     private final UserValidator userValidator;
+    private final PortalServiceClient portalServiceClient;
 
     @Transactional
     public TaskDto create(TaskDto taskDto, String companyId, Set<String> roles) {
         userValidator.validateUserIsCompanyLogist(companyId, roles);
+        portalServiceClient.getUserByUsername(taskDto.getDriverUsername());
         Task task = taskMapper.toEntity(taskDto);
-        setDriverAndCompanyId(task, companyId);
+        task.setCompanyId(companyId);
         Task savedTask = taskRepository.save(task);
         log.info("Task saved: {}", savedTask.getId());
         return taskMapper.toDto(savedTask);
     }
 
     @Transactional(readOnly = true)
-    public TaskDto getById(long id, Set<String> roles) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Task with id '%d' not found", id)));
+    public TaskLongDto getById(long id, Set<String> roles) {
+        Task task = this.findById(id);
         userValidator.validateUserIsCompanyLogist(task.getCompanyId(), roles);
-        return taskMapper.toDto(task);
+        UserDto userDto = portalServiceClient.getUserByUsername(task.getDriverUsername());
+        TaskLongDto taskLongDto = taskMapper.toLongDto(task);
+        taskLongDto.setDriver(userDto);
+        return taskLongDto;
     }
 
     @Transactional(readOnly = true)
@@ -55,11 +60,5 @@ public class TaskService {
     public Task findById(long id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Task with id '%d' not found", id)));
-    }
-
-    private void setDriverAndCompanyId(Task task, String companyId) {
-        User user = userService.getById(task.getDriver().getId());
-        task.setDriver(user);
-        task.setCompanyId(companyId);
     }
 }

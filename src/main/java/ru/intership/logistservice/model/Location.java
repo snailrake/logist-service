@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,10 +22,10 @@ public class Location {
     private long id;
 
     @Column(name = "latitude", nullable = false)
-    private String latitude;
+    private BigDecimal latitude;
 
     @Column(name = "longitude", nullable = false)
-    private String longitude;
+    private BigDecimal longitude;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "recorded_at", nullable = false)

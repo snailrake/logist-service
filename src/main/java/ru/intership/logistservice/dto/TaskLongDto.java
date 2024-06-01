@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskDto {
+public class TaskLongDto {
 
     private long id;
     private String startPoint;
     private String endPoint;
-    private String driverUsername;
+    private UserDto driver;
     private String cargoDescription;
     private String vehicleLicencePlate;
     private String companyId;

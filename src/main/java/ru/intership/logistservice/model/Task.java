@@ -26,9 +26,8 @@ public class Task {
     @Column(name = "end_point", nullable = false)
     private String endPoint;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User driver;
+    @Column(name = "user_id", nullable = false)
+    private String driverUsername;
 
     @Column(name = "cargo_description", nullable = false)
     private String cargoDescription;

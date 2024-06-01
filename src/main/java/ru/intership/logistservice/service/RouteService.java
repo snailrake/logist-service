@@ -47,8 +47,7 @@ public class RouteService {
 
     @Transactional(readOnly = true)
     public RouteConditionDto getById(long routeId, Set<String> roles) {
-        Route route = routeRepository.findById(routeId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Route with id %s not found", routeId)));
+        Route route = this.findById(routeId);
         userValidator.validateUserIsCompanyLogist(route.getTask().getCompanyId(), roles);
         return RouteConditionDto.builder()
                 .route(routeMapper.toDto(route))

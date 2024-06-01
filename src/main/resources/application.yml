@@ -18,7 +18,7 @@ spring:
     kafka:
       port: 29092
       host: localhost
-      group-id: logist_service
+      group-id: logist-service
       channels:
         route-events-channel:
           name: route_event_channel
@@ -46,6 +46,11 @@ services:
   registry:
     host: localhost
     port: 8761
+  portal:
+    url:
+      base: http://localhost:8082
+      get-user-by-id: /user
+
 
 server:
   port: 8083

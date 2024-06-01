@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,8 +15,8 @@ import java.time.LocalDateTime;
 public class LocationDto {
 
     private long id;
-    private String latitude;
-    private String longitude;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
     private LocalDateTime recordedAt;
     private long routeId;
 }

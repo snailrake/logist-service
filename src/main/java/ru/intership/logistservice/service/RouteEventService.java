@@ -24,7 +24,7 @@ public class RouteEventService {
     @Transactional
     public RouteEventDto create(RouteEventDto routeEventDto) {
         RouteEvent routeEvent = routeEventMapper.toEntity(routeEventDto);
-        Route route = findRouteById(routeEventDto.getRouteId());
+        Route route = this.findRouteById(routeEventDto.getRouteId());
         routeEvent.setRoute(route);
         RouteEvent savedRouteEvent = routeEventRepository.save(routeEvent);
         log.info("Route event saved: {}", savedRouteEvent);

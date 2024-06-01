@@ -22,7 +22,7 @@ public class RouteEventListener {
     public void listen(String event) {
         try {
             RouteEventDto routeEvent = objectMapper.readValue(event, RouteEventDto.class);
-            log.info("routeEvent received: {}", routeEvent);
+            log.info("RouteEvent received: {}", routeEvent);
             routeEventService.create(routeEvent);
         } catch (JsonProcessingException e) {
             throw new SerializationException(e);
