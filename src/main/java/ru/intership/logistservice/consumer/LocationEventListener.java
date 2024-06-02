@@ -18,7 +18,7 @@ public class LocationEventListener {
     private final LocationService locationService;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "${spring.data.kafka.channels.location-events-channel.name}", groupId = "${spring.data.kafka.group-id}")
+    @KafkaListener(topics = "${spring.kafka.topics.location-event-topic.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(String event) {
         try {
             LocationDto locationDto = objectMapper.readValue(event, LocationDto.class);

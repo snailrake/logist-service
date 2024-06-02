@@ -18,7 +18,7 @@ public class RouteEventListener {
     private final RouteEventService routeEventService;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "${spring.data.kafka.channels.route-events-channel.name}", groupId = "${spring.data.kafka.group-id}")
+    @KafkaListener(topics = "${spring.kafka.topics.route-event-topic.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(String event) {
         try {
             RouteEventDto routeEvent = objectMapper.readValue(event, RouteEventDto.class);

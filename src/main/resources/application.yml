@@ -1,4 +1,17 @@
 spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: logist-service
+      auto-offset-reset: earliest
+    topics:
+      route-event-topic:
+        name: route_event_topic
+      location-event-topic:
+        name: location_event_topic
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres
@@ -13,17 +26,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-  data:
-    kafka:
-      port: 29092
-      host: localhost
-      group-id: logist-service
-      channels:
-        route-events-channel:
-          name: route_event_channel
-        location-events-channel:
-          name: location_event_channel
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
