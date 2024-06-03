@@ -18,7 +18,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(nativeQuery = true, value = """
             SELECT COUNT(*)
             FROM task
-            WHERE task.company_id = :companyId AND DATE(task.created_at) = CURRENT_DATE
+            WHERE company_id = :companyId AND DATE(created_at) = CURRENT_DATE
             """)
     long findDailyStartedTasksCount(String companyId);
 }
