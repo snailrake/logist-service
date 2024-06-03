@@ -34,7 +34,7 @@ public class RouteService {
     @Transactional
     public RouteDto create(long taskId, Set<String> roles) {
         Task task = taskService.findById(taskId);
-        userValidator.validateUserIsCompanyLogist(task.getCompanyId(), roles);
+        userValidator.validateUserIsCompanyLogistOrDriver(task.getCompanyId(), roles);
         Route route = Route.builder()
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -66,6 +66,11 @@ public class RouteService {
     public Route findById(long routeId) {
         return routeRepository.findById(routeId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Route with id %s not found", routeId)));
+    }
+
+    @Transactional(readOnly = true)
+    public long findDailyEventCountByCompanyId(RouteEventType routeEventType, String companyId) {
+        return routeRepository.findDailyEventCountByCompanyId(routeEventType.name(), companyId);
     }
 
     private void createStartedEvent(Route route) {

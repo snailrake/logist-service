@@ -14,4 +14,10 @@ public class UserValidator {
             throw new NotEnoughRightsException("User is not a company logist");
         }
     }
+
+    public void validateUserIsCompanyLogistOrDriver(String companyInn, Set<String> roles) {
+        if (!roles.contains(companyInn + UserRole.LOGIST.name()) && !roles.contains(companyInn + UserRole.DRIVER.name())) {
+            throw new NotEnoughRightsException("User is not a company logist or driver");
+        }
+    }
 }
