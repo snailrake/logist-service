@@ -34,7 +34,7 @@ public class RouteService {
     @Transactional
     public RouteDto create(long taskId, Set<String> roles) {
         Task task = taskService.findById(taskId);
-        userValidator.validateUserIsCompanyLogist(task.getCompanyId(), roles);
+        userValidator.validateUserIsCompanyLogistOrDriver(task.getCompanyId(), roles);
         Route route = Route.builder()
                 .createdAt(LocalDateTime.now())
                 .build();

@@ -29,7 +29,7 @@ public class LocationService {
         Route route = routeService.findById(locationDto.getRouteId());
         location.setRoute(route);
         Location savedLocation = locationRepository.save(location);
-        log.info("Location saved: {}", savedLocation);
+        log.info("Location saved: {}", savedLocation.getId());
         return locationMapper.toDto(savedLocation);
     }
 
