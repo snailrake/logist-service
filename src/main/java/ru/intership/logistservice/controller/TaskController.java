@@ -40,4 +40,11 @@ public class TaskController {
                                             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size) {
         return taskService.getAllCompanyTasks(companyId, userContext.getUserRoles(), page, size);
     }
+
+    @GetMapping("/driver")
+    public List<TaskDto> getAllDriverTasksByUsername(@RequestParam String username,
+                                                     @RequestParam(defaultValue = "0") @Min(0) int page,
+                                                     @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size) {
+        return taskService.getAllDriverTasksByUsername(username, page, size);
+    }
 }

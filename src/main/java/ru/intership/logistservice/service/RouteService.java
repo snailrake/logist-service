@@ -68,6 +68,11 @@ public class RouteService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Route with id %s not found", routeId)));
     }
 
+    @Transactional(readOnly = true)
+    public long findDailyEventCountByCompanyId(RouteEventType routeEventType, String companyId) {
+        return routeRepository.findDailyEventCountByCompanyId(routeEventType.name(), companyId);
+    }
+
     private void createStartedEvent(Route route) {
         RouteEventDto routeEvent = RouteEventDto.builder()
                 .type(RouteEventType.CREATED)

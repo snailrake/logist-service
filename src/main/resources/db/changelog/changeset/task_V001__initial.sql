@@ -6,7 +6,8 @@ CREATE TABLE task
     user_id               varchar(128) NOT NULL,
     cargo_description     varchar(512) NOT NULL,
     vehicle_licence_plate varchar(10)  NOT NULL,
-    company_id            varchar(12)  NOT NULL
+    company_id            varchar(12)  NOT NULL,
+    created_at            timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE route
@@ -33,10 +34,10 @@ CREATE TABLE route_event
 CREATE TABLE location
 (
     id          bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
-    latitude    decimal NOT NULL,
-    longitude   decimal NOT NULL,
-    recorded_at timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    route_id    bigint       NOT NULL,
+    latitude    decimal   NOT NULL,
+    longitude   decimal   NOT NULL,
+    recorded_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    route_id    bigint    NOT NULL,
 
     CONSTRAINT fk_route_id FOREIGN KEY (route_id) REFERENCES route (id) ON DELETE CASCADE
 );

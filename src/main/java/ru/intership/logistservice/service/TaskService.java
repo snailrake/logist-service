@@ -60,4 +60,15 @@ public class TaskService {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Task with id '%d' not found", id)));
     }
+
+    @Transactional(readOnly = true)
+    public List<TaskDto> getAllDriverTasksByUsername(String username, int page, int size) {
+        List<Task> tasks = taskRepository.findAllByDriverUsername(username, PageRequest.of(page, size));
+        return taskMapper.toDto(tasks);
+    }
+
+    @Transactional(readOnly = true)
+    public long findDailyStartedTasksCount(String companyId) {
+        return taskRepository.findDailyStartedTasksCount(companyId);
+    }
 }
